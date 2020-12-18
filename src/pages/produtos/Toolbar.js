@@ -38,9 +38,9 @@ const Toolbar = ({ className, ...rest }) => {
         <Button
           color="primary"
           variant="contained"
-          href='/app/cadastro-cliente'
+          href='/app/cadastro-produto'
         >
-          Novo Cliente
+          Novo Produto
         </Button>
       </Box>
       <Box mt={3}>

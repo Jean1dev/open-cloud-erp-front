@@ -4,13 +4,15 @@ import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import AccountView from 'src/views/account/AccountView';
 import CustomerListView from 'src/pages/clientes';
-//import DashboardView from 'src/views/reports/DashboardView';
+import CadastroCliente from 'src/pages/clientes/CadastroCliente'
 import DashboardView from 'src/pages/dashboard';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
+import ProdutosListView from 'src/pages/produtos';
+import CadastroProduto from 'src/pages/produtos/CadastroProduto'
 
 const routes = [
   {
@@ -18,9 +20,12 @@ const routes = [
     element: <DashboardLayout />,
     children: [
       { path: 'account', element: <AccountView /> },
+      { path: 'cadastro-cliente', element: <CadastroCliente /> },
+      { path: 'cadastro-produto', element: <CadastroProduto /> },
       { path: 'customers', element: <CustomerListView /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'products', element: <ProductListView /> },
+      { path: 'produtos', element: <ProdutosListView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
