@@ -37,7 +37,8 @@ const CadastroProduto = ({ className, ...rest }) => {
   const submitForm = useCallback(() => {
     api.post('produto', {
         nome: values.nome,
-        telefone: values.telefone
+        ca: values.ca,
+        estoque: values.estoque
     }).then(() => {
         alert('Produto cadastrado com sucesso')
         setValues({
