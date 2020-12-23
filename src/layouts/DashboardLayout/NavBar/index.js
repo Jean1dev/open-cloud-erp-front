@@ -15,7 +15,8 @@ import {
 import {
   BarChart as BarChartIcon,
   ShoppingBag as ShoppingBagIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  ShoppingCart
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -40,6 +41,11 @@ const items = [
     href: '/app/produtos',
     icon: ShoppingBagIcon,
     title: 'Produtos'
+  },
+  {
+    href: '/app/compras',
+    icon: ShoppingCart,
+    title: 'Compras'
   },
 ];
 

@@ -12,7 +12,10 @@ import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
 import ProdutosListView from 'src/pages/produtos';
-import CadastroProduto from 'src/pages/produtos/CadastroProduto'
+import CadastroProduto from 'src/pages/produtos/CadastroProduto';
+import CadastroCompra from 'src/pages/compras/CadastroCompra';
+import ReportsView from 'src/views/reports/DashboardView';
+import Compras from 'src/pages/compras'
 
 const routes = [
   {
@@ -22,8 +25,11 @@ const routes = [
       { path: 'account', element: <AccountView /> },
       { path: 'cadastro-cliente', element: <CadastroCliente /> },
       { path: 'cadastro-produto', element: <CadastroProduto /> },
+      { path: 'cadastro-compra', element: <CadastroCompra /> },
       { path: 'customers', element: <CustomerListView /> },
+      { path: 'compras', element: <Compras /> },
       { path: 'dashboard', element: <DashboardView /> },
+      { path: 'dashboard-view', element: <ReportsView /> },
       { path: 'products', element: <ProductListView /> },
       { path: 'produtos', element: <ProdutosListView /> },
       { path: 'settings', element: <SettingsView /> },
