@@ -14,8 +14,10 @@ import SettingsView from 'src/views/settings/SettingsView';
 import ProdutosListView from 'src/pages/produtos';
 import CadastroProduto from 'src/pages/produtos/CadastroProduto';
 import CadastroCompra from 'src/pages/compras/CadastroCompra';
+import CadastroVenda from 'src/pages/vendas/CadastroVenda';
 import ReportsView from 'src/views/reports/DashboardView';
-import Compras from 'src/pages/compras'
+import Compras from 'src/pages/compras';
+import Vendas from 'src/pages/vendas';
 
 const routes = [
   {
@@ -26,8 +28,10 @@ const routes = [
       { path: 'cadastro-cliente', element: <CadastroCliente /> },
       { path: 'cadastro-produto', element: <CadastroProduto /> },
       { path: 'cadastro-compra', element: <CadastroCompra /> },
+      { path: 'cadastro-venda', element: <CadastroVenda /> },
       { path: 'customers', element: <CustomerListView /> },
       { path: 'compras', element: <Compras /> },
+      { path: 'vendas', element: <Vendas /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'dashboard-view', element: <ReportsView /> },
       { path: 'products', element: <ProductListView /> },
