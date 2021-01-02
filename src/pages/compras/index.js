@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   makeStyles,
+  Box,
   LinearProgress
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Toolbar from './Toolbar';
-//import api from '../../service/api'
+import Results from './Results';
+import api from '../../service/api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,15 +21,31 @@ const useStyles = makeStyles((theme) => ({
 
 const Compras = () => {
   const classes = useStyles();
-  //const [customers, setCustomers] = useState([]);
-  const [loading] = useState(false)
+  const [compras, setCompras] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-      
+    api.get('compra/paginated', {
+      params: {
+        limit: limit,
+        offset: page
+      }
+    }).then(response => {
+      setCompras(response.data)
+      setLoading(false)
+    })
+  }, [limit, page])
+
+  const reload = useCallback((limit, offset) => {
+    setLoading(true)
+    setLimit(limit)
+    setPage(offset)
   }, [])
 
-  if (loading) 
-    return <LinearProgress  />
+  if (loading)
+    return <LinearProgress />
 
   return (
     <Page
@@ -36,7 +54,9 @@ const Compras = () => {
     >
       <Container maxWidth={false}>
         <Toolbar />
-      
+        <Box mt={3}>
+          <Results data={compras.content} reload={reload} page={page} limit={limit} total={compras.totalElements} />
+        </Box>
       </Container>
     </Page>
   );

@@ -28,6 +28,16 @@ const FormProduto = ({ addProduto, className, ...rest }) => {
     });
 
     const handleChange = (event) => {
+        if (event.target.name === 'produtoSelecionado') {
+            const reg = produtos.filter(prod => prod.id === event.target.value)
+            setValues({
+                ...values,
+                valorUnitario: reg[0].valorVenda,
+                [event.target.name]: event.target.value
+            });
+            return
+        }
+
         setValues({
             ...values,
             [event.target.name]: event.target.value
@@ -37,7 +47,6 @@ const FormProduto = ({ addProduto, className, ...rest }) => {
     useEffect(() => {
         api.get('produto').then(response => {
             setProdutos(response.data)
-            
         })
     }, [])
 
@@ -52,7 +61,7 @@ const FormProduto = ({ addProduto, className, ...rest }) => {
         
         const produto = {
             produtoId: prod.id,
-            quantidade: values.quantidade || 0,
+            quantidade: values.quantidade || 1,
             valorUnitario: values.valorUnitario || 0,
             nome: prod.nome,
             ca: prod.ca

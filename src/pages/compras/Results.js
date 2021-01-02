@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,7 +14,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -23,22 +23,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, data, reload, page, limit, ...rest }) => {
+const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
   const classes = useStyles();
-  const products = data.content;
-  console.log(products)
   const [selectedIds, setSelectedIds] = useState([]);
-  const navigate = useNavigate()
-
-  const changeProduct = useCallback((prod) => {
-    navigate('../cadastro-produto', { replace: true, state: prod })
-  }, [navigate])
 
   const handleSelectAll = (event) => {
     let newSelectedIds;
 
     if (event.target.checked) {
-      newSelectedIds = products.map((product) => product.id);
+      newSelectedIds = data.map((reg) => reg.id);
     } else {
       newSelectedIds = [];
     }
@@ -67,11 +60,11 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
   };
 
   const handleLimitChange = (event) => {
-    reload(event.target.value, page)
+    reload(event.target.value, page);
   };
 
   const handlePageChange = (event, newPage) => {
-    reload(limit, newPage)
+    reload(limit, newPage);
   };
 
   return (
@@ -86,38 +79,34 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedIds.length === products.length}
+                    checked={selectedIds.length === data.length}
                     color="primary"
                     indeterminate={
                       selectedIds.length > 0
-                      && selectedIds.length < products.length
+                      && selectedIds.length < data.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
                 <TableCell>
-                  Nome
+                  Data
                 </TableCell>
                 <TableCell>
-                  C.A
-                </TableCell>
-                <TableCell>
-                  Estoque Atual
+                  Total
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {products.slice(0, limit).map((product) => (
+              {data.slice(0, limit).map((reg) => (
                 <TableRow
                   hover
-                  key={product.id}
-                  selected={selectedIds.indexOf(product.id) !== -1}
-                  onClick={() => changeProduct(product)}
+                  key={reg.id}
+                  selected={selectedIds.indexOf(reg.id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedIds.indexOf(product.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, product.id)}
+                      checked={selectedIds.indexOf(reg.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, reg.id)}
                       value="true"
                     />
                   </TableCell>
@@ -130,7 +119,7 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {product.nome}
+                        {moment(`${reg.dataCompra[0]}${reg.dataCompra[1]}${reg.dataCompra[2]}`).format('yyyy/MM/DD')}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -143,20 +132,7 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {product.ca}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      alignItems="center"
-                      display="flex"
-                    >
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {product.estoque}
+                        {reg.valorTotal}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -168,7 +144,7 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={data.totalElements}
+        count={total}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleLimitChange}
         page={page}

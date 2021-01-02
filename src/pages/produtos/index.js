@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Container,
@@ -22,17 +22,30 @@ const useStyles = makeStyles((theme) => ({
 const ProductsListView = () => {
   const classes = useStyles();
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-      api.get('produto').then(response => {
-        setProducts(response.data)
-        setLoading(false)
-      })
+    api.get('produto/paginated', {
+      params: {
+        limit: limit,
+        offset: page
+      }
+    }).then(response => {
+      setProducts(response.data)
+      setLoading(false)
+    })
+  }, [limit, page])
+
+  const reload = useCallback((limit, offset) => {
+    setLoading(true)
+    setLimit(limit)
+    setPage(offset)
   }, [])
 
-  if (loading) 
-    return <LinearProgress  />
+  if (loading)
+    return <LinearProgress />
 
   return (
     <Page
@@ -42,7 +55,7 @@ const ProductsListView = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <Results products={products} />
+          <Results data={products} reload={reload} page={page} limit={limit} />
         </Box>
       </Container>
     </Page>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -13,6 +13,7 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import api from 'src/service/api';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles(({
   root: {}
@@ -23,9 +24,27 @@ const CadastroProduto = ({ className, ...rest }) => {
   const [values, setValues] = useState({
     nome: '',
     ca: '',
-    estoque: 0
+    estoque: 0,
+    valorVenda: 0,
+    id: ''
   });
   const [loading, setLoading] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const { state } = useLocation();
+  
+  useEffect(() => {
+    if (state) {
+      setIsUpdate(true)
+      setValues({
+        nome: state.nome,
+        ca: state.ca,
+        estoque: state.estoque || 0,
+        valorVenda: state.valorVenda || 0,
+        id: state.id
+      })
+    }
+
+  }, [state])
 
   const handleChange = (event) => {
     setValues({
@@ -34,23 +53,50 @@ const CadastroProduto = ({ className, ...rest }) => {
     });
   };
 
+  const updateForm = useCallback(() => {
+    api.put(`produto/${values.id}`, {
+      nome: values.nome,
+      ca: values.ca,
+      estoque: values.estoque,
+      valorVenda: values.valorVenda
+    }).then(() => {
+      alert('Produto alterado com sucesso')
+      setValues({
+          nome: '',
+          ca: '',
+          estoque: 0,
+          valorVenda: 0
+      })
+      setLoading(false)    
+      setIsUpdate(false)
+    }) 
+
+    setLoading(true)
+  }, [values])
+
   const submitForm = useCallback(() => {
+    if (isUpdate) {
+      return updateForm()
+    }
+
     api.post('produto', {
         nome: values.nome,
         ca: values.ca,
-        estoque: values.estoque
+        estoque: values.estoque,
+        valorVenda: values.valorVenda
     }).then(() => {
         alert('Produto cadastrado com sucesso')
         setValues({
             nome: '',
             ca: '',
-            estoque: 0
+            estoque: 0,
+            valorVenda: 0
         })
         setLoading(false)    
     })    
 
     setLoading(true)
-  }, [values])
+  }, [values, isUpdate, updateForm])
 
   if (loading) {
       return <LinearProgress/>
@@ -88,7 +134,7 @@ const CadastroProduto = ({ className, ...rest }) => {
             value={values.ca}
             variant="outlined"
           />
-              <TextField
+          <TextField
             fullWidth
             label="estoque atual"
             margin="normal"
@@ -96,6 +142,16 @@ const CadastroProduto = ({ className, ...rest }) => {
             onChange={handleChange}
             type="number"
             value={values.estoque}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="valor de venda"
+            margin="normal"
+            name="valorVenda"
+            onChange={handleChange}
+            type="number"
+            value={values.valorVenda}
             variant="outlined"
           />
         </CardContent>
