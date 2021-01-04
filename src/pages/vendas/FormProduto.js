@@ -67,11 +67,6 @@ const FormProduto = ({ addProduto, className, ...rest }) => {
             ca: prod.ca
         }
         addProduto(produto)
-        setValues({
-            quantidade: undefined,
-            valorUnitario: undefined,
-            produtoSelecionado: undefined
-        })
     }, [values, produtos, addProduto])
 
     return (
