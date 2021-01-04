@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -24,11 +23,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, customers, ...rest }) => {
+const Results = ({ className, data, reload, page, limit, ...rest }) => {
   const classes = useStyles();
+  const customers = data.content;
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
 
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
@@ -63,11 +61,11 @@ const Results = ({ className, customers, ...rest }) => {
   };
 
   const handleLimitChange = (event) => {
-    setLimit(event.target.value);
+    reload(event.target.value, page);
   };
 
   const handlePageChange = (event, newPage) => {
-    setPage(newPage);
+    reload(limit, newPage);
   };
 
   return (
@@ -153,7 +151,7 @@ const Results = ({ className, customers, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={customers.length}
+        count={data.totalElements}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleLimitChange}
         page={page}
@@ -162,11 +160,6 @@ const Results = ({ className, customers, ...rest }) => {
       />
     </Card>
   );
-};
-
-Results.propTypes = {
-  className: PropTypes.string,
-  customers: PropTypes.array.isRequired
 };
 
 export default Results;

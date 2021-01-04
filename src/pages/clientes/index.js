@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Container,
@@ -22,13 +22,26 @@ const useStyles = makeStyles((theme) => ({
 const CustomerListView = () => {
   const classes = useStyles();
   const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-      api.get('cliente').then(response => {
+      api.get('cliente/paginated', {
+        params: {
+          limit: limit,
+          offset: page
+        }
+      }).then(response => {
         setCustomers(response.data)
         setLoading(false)
       })
+  }, [limit, page])
+
+  const reload = useCallback((limit, offset) => {
+    setLoading(true)
+    setLimit(limit)
+    setPage(offset)
   }, [])
 
   if (loading) 
@@ -42,7 +55,7 @@ const CustomerListView = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results data={customers} reload={reload} page={page} limit={limit} />
         </Box>
       </Container>
     </Page>

@@ -6,7 +6,7 @@ import {
 import ComprasDetail from './ComprasDetail';
 import ItemList from './Itemlist';
 import api from 'src/service/api';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const CadastroCompra = () => {
     const [total, setTotal] = useState(0)
