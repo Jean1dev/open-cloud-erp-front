@@ -14,7 +14,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import moment from 'moment';
+import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -122,7 +122,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {moment(`${reg.dataVenda[0]}${reg.dataVenda[1]}${reg.dataVenda[2]}`).format('yyyy/MM/DD')}
+                        {moment(reg.dataVenda).format('DD/MM/yyyy')}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -148,7 +148,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {reg.valorTotal}
+                        R$ {reg.valorTotal}
                       </Typography>
                     </Box>
                   </TableCell>

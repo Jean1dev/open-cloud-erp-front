@@ -41,7 +41,7 @@ const ComprasDetail = ({ finalizarCompra, total, className, ...rest }) => {
                                 color="textPrimary"
                                 gutterBottom
                                 variant="h4"
-                            > total: {total}
+                            > total R$: {total}
                             </Typography>
 
                             <Button
