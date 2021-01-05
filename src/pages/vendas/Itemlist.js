@@ -4,7 +4,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
 import {
     Box,
-    Button,
     Card,
     CardHeader,
     Chip,
@@ -16,7 +15,6 @@ import {
     TableRow,
     makeStyles,
 } from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import FormProduto from './FormProduto';
 
 const useStyles = makeStyles(() => ({
@@ -96,14 +94,6 @@ const ItemList = ({ atualizarVenda, className, ...rest }) => {
                 justifyContent="flex-end"
                 p={2}
             >
-                <Button
-                    color="primary"
-                    endIcon={<ArrowRightIcon />}
-                    size="small"
-                    variant="text"
-                >
-                    View all
-        </Button>
             </Box>
         </Card>
     );

@@ -119,7 +119,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {moment(`${reg.dataCompra[0]}${reg.dataCompra[1]}${reg.dataCompra[2]}`).format('yyyy/MM/DD')}
+                        {moment(reg.dataCompra).format('DD/MM/yyyy')}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -132,7 +132,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {reg.valorTotal}
+                        R$ {reg.valorTotal}
                       </Typography>
                     </Box>
                   </TableCell>
