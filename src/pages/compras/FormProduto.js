@@ -28,6 +28,16 @@ const FormProduto = ({ addProduto, className, ...rest }) => {
     });
 
     const handleChange = (event) => {
+        if (event.target.name === 'produtoSelecionado') {
+            const reg = produtos.filter(prod => prod.id === event.target.value)
+            setValues({
+                ...values,
+                valorUnitario: reg[0].valorCompra,
+                [event.target.name]: event.target.value
+            });
+            return
+        }
+
         setValues({
             ...values,
             [event.target.name]: event.target.value
