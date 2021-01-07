@@ -26,7 +26,8 @@ const CadastroProduto = ({ className, ...rest }) => {
     ca: '',
     estoque: 0,
     valorVenda: 0,
-    id: ''
+    id: '',
+    valorCompra: 0
   });
   const [loading, setLoading] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -40,6 +41,7 @@ const CadastroProduto = ({ className, ...rest }) => {
         ca: state.ca,
         estoque: state.estoque || 0,
         valorVenda: state.valorVenda || 0,
+        valorCompra: state.valorCompra || 0,
         id: state.id
       })
     }
@@ -58,14 +60,16 @@ const CadastroProduto = ({ className, ...rest }) => {
       nome: values.nome,
       ca: values.ca,
       estoque: values.estoque,
-      valorVenda: values.valorVenda
+      valorVenda: values.valorVenda,
+      valorCompra: values.valorCompra
     }).then(() => {
       alert('Produto alterado com sucesso')
       setValues({
           nome: '',
           ca: '',
           estoque: 0,
-          valorVenda: 0
+          valorVenda: 0,
+          valorCompra: 0
       })
       setLoading(false)    
       setIsUpdate(false)
@@ -83,14 +87,16 @@ const CadastroProduto = ({ className, ...rest }) => {
         nome: values.nome,
         ca: values.ca,
         estoque: values.estoque,
-        valorVenda: values.valorVenda
+        valorVenda: values.valorVenda,
+        valorCompra: values.valorCompra
     }).then(() => {
         alert('Produto cadastrado com sucesso')
         setValues({
             nome: '',
             ca: '',
             estoque: 0,
-            valorVenda: 0
+            valorVenda: 0,
+            valorCompra: 0
         })
         setLoading(false)    
     })    
@@ -152,6 +158,16 @@ const CadastroProduto = ({ className, ...rest }) => {
             onChange={handleChange}
             type="number"
             value={values.valorVenda}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="valor de compra"
+            margin="normal"
+            name="valorCompra"
+            onChange={handleChange}
+            type="number"
+            value={values.valorCompra}
             variant="outlined"
           />
         </CardContent>
