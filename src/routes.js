@@ -18,6 +18,7 @@ import CadastroVenda from 'src/pages/vendas/CadastroVenda';
 import ReportsView from 'src/views/reports/DashboardView';
 import Compras from 'src/pages/compras';
 import Vendas from 'src/pages/vendas';
+import SelecaoRelatorio from 'src/pages/relatorios';
 
 const routes = [
   {
@@ -30,6 +31,7 @@ const routes = [
       { path: 'cadastro-compra', element: <CadastroCompra /> },
       { path: 'cadastro-venda', element: <CadastroVenda /> },
       { path: 'customers', element: <CustomerListView /> },
+      { path: 'relatorios', element: <SelecaoRelatorio /> },
       { path: 'compras', element: <Compras /> },
       { path: 'vendas', element: <Vendas /> },
       { path: 'dashboard', element: <DashboardView /> },

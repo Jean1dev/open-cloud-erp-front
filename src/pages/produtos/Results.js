@@ -102,6 +102,9 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                   C.A
                 </TableCell>
                 <TableCell>
+                  Valor R$ 
+                </TableCell>
+                <TableCell>
                   Estoque Atual
                 </TableCell>
               </TableRow>
@@ -144,6 +147,19 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                         variant="body1"
                       >
                         {product.ca}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box
+                      alignItems="center"
+                      display="flex"
+                    >
+                      <Typography
+                        color="textPrimary"
+                        variant="body1"
+                      >
+                        {product.valorVenda}
                       </Typography>
                     </Box>
                   </TableCell>

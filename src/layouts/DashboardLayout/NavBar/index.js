@@ -16,7 +16,8 @@ import {
   ShoppingBag as ShoppingBagIcon,
   Users as UsersIcon,
   ShoppingCart,
-  DollarSign
+  DollarSign,
+  FilePlus
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -51,6 +52,11 @@ const items = [
     href: '/app/vendas',
     icon: DollarSign,
     title: 'Vendas'
+  },
+  {
+    href: '/app/relatorios',
+    icon: FilePlus,
+    title: 'Relatórios'
   },
 ];
 
