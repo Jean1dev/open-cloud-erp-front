@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,7 +14,9 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import moment from 'moment'
+import moment from 'moment';
+import { Share2 } from 'react-feather';
+import { baseURL } from '../../service/api'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -67,6 +69,11 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
     reload(limit, newPage);
   };
 
+  const generateReport = useCallback((id) => {
+    var win = window.open(`${baseURL}/venda/gerar-comprovante?id=${id}`, '_blank');
+    win.focus();
+  }, [])
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -96,6 +103,9 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                 </TableCell>
                 <TableCell>
                   Total
+                </TableCell>
+                <TableCell>
+
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -151,6 +161,9 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                         R$ {reg.valorTotal}
                       </Typography>
                     </Box>
+                  </TableCell>
+                  <TableCell padding="checkbox">
+                    <Share2 onClick={() => generateReport(reg.id)}/>
                   </TableCell>
                 </TableRow>
               ))}
