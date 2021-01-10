@@ -11,6 +11,7 @@ import ClienteSelect from './ClienteSelect';
 
 const CadastroVenda = () => {
     const [total, setTotal] = useState(0)
+    const [valorRecebido, setValorRecebido] = useState(0)
     const [items, setItems] = useState([])
     const [cliente, setCliente] = useState(undefined)
     const navigate = useNavigate()
@@ -19,17 +20,19 @@ const CadastroVenda = () => {
         const total = items.reduce((sum, item) => sum + (item.quantidade * item.valorUnitario), 0)
         setItems(items)
         setTotal(total)
+        setValorRecebido(total)
     }
 
     const finalizar = useCallback(() => {
         api.post('venda', {
             cliente,
+            valorRecebido,
             itens: items
         }).then(() => {
             alert('venda cadastrada')
             navigate('../produtos', { replace: true })
         })
-    }, [items, navigate, cliente])
+    }, [items, navigate, cliente, valorRecebido])
 
     const addCliente = useCallback(id => {
         setCliente(id)
@@ -39,7 +42,11 @@ const CadastroVenda = () => {
         <Card>
             <CardHeader
                 subheader="Cadastro venda" />
-                <VendasDetail total={total} finalizar={finalizar}/>
+                <VendasDetail 
+                    total={total} 
+                    valorRecebido={valorRecebido} 
+                    setValorRecebido={setValorRecebido}
+                    finalizar={finalizar}/>
                 <ClienteSelect addCliente={addCliente}/>
                 <ItemList atualizarVenda={atualizarVenda} />
         </Card>

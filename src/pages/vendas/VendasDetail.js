@@ -5,9 +5,12 @@ import {
     Box,
     Card,
     CardContent,
+    CardHeader,
     makeStyles,
     Typography,
     Button,
+    TextField,
+    Grid
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +27,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const VendasDetail = ({ finalizar, total, className, ...rest }) => {
+const VendasDetail = ({
+    finalizar,
+    total,
+    setValorRecebido,
+    valorRecebido,
+    className,
+    ...rest
+}) => {
     const classes = useStyles();
 
     return (
@@ -44,6 +54,30 @@ const VendasDetail = ({ finalizar, total, className, ...rest }) => {
                             > total R$: {total}
                             </Typography>
 
+                            <Card>
+                                <CardHeader
+                                    title="Informações da venda"
+                                />
+
+                                <CardContent>
+                                    <Grid
+                                        container
+                                        spacing={3}
+                                    >
+
+                                        <TextField
+                                            fullWidth
+                                            label="Valor Recebido pelo Cliente"
+                                            name="valorRecebido"
+                                            onChange={e => setValorRecebido(e.target.value)}
+                                            type="number"
+                                            value={valorRecebido}
+                                            variant="outlined"
+                                        />
+
+                                    </Grid>
+                                </CardContent>
+                            </Card>
                             <Button
                                 color="primary"
                                 variant="contained"
@@ -62,3 +96,5 @@ VendasDetail.propTypes = {
 };
 
 export default VendasDetail;
+
+
