@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import api from 'src/service/api';
 import { useLocation } from 'react-router-dom';
+import { toastSuccess } from 'src/utils/toast';
 
 const useStyles = makeStyles(({
   root: {}
@@ -63,7 +64,7 @@ const CadastroProduto = ({ className, ...rest }) => {
       valorVenda: values.valorVenda,
       valorCompra: values.valorCompra
     }).then(() => {
-      alert('Produto alterado com sucesso')
+      toastSuccess('Produto alterado com sucesso')
       setValues({
           nome: '',
           ca: '',
@@ -90,7 +91,7 @@ const CadastroProduto = ({ className, ...rest }) => {
         valorVenda: values.valorVenda,
         valorCompra: values.valorCompra
     }).then(() => {
-        alert('Produto cadastrado com sucesso')
+      toastSuccess('Produto cadastrado com sucesso')
         setValues({
             nome: '',
             ca: '',
