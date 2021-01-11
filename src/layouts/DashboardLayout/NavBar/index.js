@@ -17,7 +17,8 @@ import {
   Users as UsersIcon,
   ShoppingCart,
   DollarSign,
-  FilePlus
+  FilePlus,
+  UserCheck
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -32,6 +33,11 @@ const items = [
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard'
+  },
+  {
+    href: '/app/fornecedores',
+    icon: UserCheck,
+    title: 'Fornecedores'
   },
   {
     href: '/app/customers',

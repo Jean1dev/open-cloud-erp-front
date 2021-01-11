@@ -16,11 +16,11 @@ const useStyles = makeStyles(() => ({
     root: {}
 }));
 
-const ClienteSelect = ({ addCliente, className, ...rest }) => {
+const FornecedorSelect = ({ add, className, ...rest }) => {
     const classes = useStyles();
-    const [clientes, setClientes] = useState([]);
+    const [fornecedores, setFornecedores] = useState([]);
     const [values, setValues] = useState({
-        clienteSelecionado: undefined
+        fornecedorSelecionado: undefined
     });
 
     const handleChange = (event) => {
@@ -28,17 +28,17 @@ const ClienteSelect = ({ addCliente, className, ...rest }) => {
             ...values,
             [event.target.name]: event.target.value
         });
-        addCliente(event.target.value)
+        add(event.target.value)
     };
 
     useEffect(() => {
-        api.get('cliente').then(response => {
-            setClientes(response.data)
+        api.get('fornecedor').then(response => {
+            setFornecedores(response.data)
             if (response.data.length > 1) {
-                addCliente(response.data[0].id)
+                add(response.data[0].id)
             }
         })
-    }, [addCliente])
+    }, [add])
 
     return (
         <form
@@ -49,7 +49,7 @@ const ClienteSelect = ({ addCliente, className, ...rest }) => {
         >
             <Card>
                 <CardHeader
-                    title="Cliente"
+                    title="Fornecedor"
                 />
                 <Divider />
                 <CardContent>
@@ -64,20 +64,20 @@ const ClienteSelect = ({ addCliente, className, ...rest }) => {
                         >
                             <TextField
                                 fullWidth
-                                name="clienteSelecionado"
+                                name="fornecedorSelecionado"
                                 onChange={handleChange}
                                 required
                                 select
                                 SelectProps={{ native: true }}
-                                value={values.clienteSelecionado}
+                                value={values.fornecedorSelecionado}
                                 variant="outlined"
                             >
-                                {clientes.map((cliente) => (
+                                {fornecedores.map((fornecedor) => (
                                     <option
-                                        key={cliente.id}
-                                        value={cliente.id}
+                                        key={fornecedor.id}
+                                        value={fornecedor.id}
                                     >
-                                        {cliente.nome}
+                                        {fornecedor.nome}
                                     </option>
                                 ))}
                             </TextField>
@@ -89,8 +89,8 @@ const ClienteSelect = ({ addCliente, className, ...rest }) => {
     );
 };
 
-ClienteSelect.propTypes = {
+FornecedorSelect.propTypes = {
     className: PropTypes.string
 };
 
-export default ClienteSelect;
+export default FornecedorSelect;
