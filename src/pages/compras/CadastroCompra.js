@@ -7,6 +7,7 @@ import ComprasDetail from './ComprasDetail';
 import ItemList from './Itemlist';
 import api from 'src/service/api';
 import { useNavigate } from 'react-router-dom';
+import { toastSuccess } from 'src/utils/toast';
 
 const CadastroCompra = () => {
     const [total, setTotal] = useState(0)
@@ -23,7 +24,7 @@ const CadastroCompra = () => {
         api.post('compra', {
             itens: items
         }).then(() => {
-            alert('compra cadastrada')
+            toastSuccess('compra cadastrada')
             navigate('../produtos', { replace: true })
         })
     }, [items, navigate])

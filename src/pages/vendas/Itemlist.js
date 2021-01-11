@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import clsx from 'clsx';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
@@ -24,14 +24,13 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const ItemList = ({ atualizarVenda, className, ...rest }) => {
+const ItemList = ({ atualizarVenda, items, setItems, className, ...rest }) => {
     const classes = useStyles();
-    const [orders, setOrders] = useState([]);
 
     const addProduto = useCallback((produto) => {
-        setOrders([produto, ...orders])
-        atualizarVenda([produto, ...orders])
-    }, [orders, atualizarVenda])
+        setItems([produto, ...items])
+        atualizarVenda([produto, ...items])
+    }, [items, atualizarVenda, setItems])
 
     return (
         <Card
@@ -62,7 +61,7 @@ const ItemList = ({ atualizarVenda, className, ...rest }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {orders.map((order) => (
+                            {items.map((order) => (
                                 <TableRow
                                     hover
                                     key={order.id}

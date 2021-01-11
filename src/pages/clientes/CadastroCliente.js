@@ -13,6 +13,7 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import api from 'src/service/api';
+import { toastSuccess } from 'src/utils/toast';
 
 const useStyles = makeStyles(({
   root: {}
@@ -38,7 +39,7 @@ const CadastroCliente = ({ className, ...rest }) => {
         nome: values.nome,
         telefone: values.telefone
     }).then(() => {
-        alert('Cliente cadastrado com sucesso')
+        toastSuccess('Cliente cadastrado com sucesso')
         setValues({
             nome: '',
             telefone: ''
