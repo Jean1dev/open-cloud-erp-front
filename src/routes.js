@@ -19,6 +19,8 @@ import ReportsView from 'src/views/reports/DashboardView';
 import Compras from 'src/pages/compras';
 import Vendas from 'src/pages/vendas';
 import SelecaoRelatorio from 'src/pages/relatorios';
+import FornecedoresListView from 'src/pages/fornecedores';
+import CadastroFornecedor from 'src/pages/fornecedores/CadastroFornecedor';
 
 const routes = [
   {
@@ -27,10 +29,12 @@ const routes = [
     children: [
       { path: 'account', element: <AccountView /> },
       { path: 'cadastro-cliente', element: <CadastroCliente /> },
+      { path: 'cadastro-fornecedor', element: <CadastroFornecedor /> },
       { path: 'cadastro-produto', element: <CadastroProduto /> },
       { path: 'cadastro-compra', element: <CadastroCompra /> },
       { path: 'cadastro-venda', element: <CadastroVenda /> },
       { path: 'customers', element: <CustomerListView /> },
+      { path: 'fornecedores', element: <FornecedoresListView /> },
       { path: 'relatorios', element: <SelecaoRelatorio /> },
       { path: 'compras', element: <Compras /> },
       { path: 'vendas', element: <Vendas /> },

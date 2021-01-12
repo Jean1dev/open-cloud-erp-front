@@ -33,7 +33,7 @@ const CadastroVenda = () => {
             itens: items
         }).then(() => {
             toastSuccess('venda cadastrada')
-            navigate('../produtos', { replace: true })
+            navigate('../vendas', { replace: true })
         }).catch(() => {
             toastError('Ocorreu um erro ao gravar a venda tente novamente')
             setLoading(false)

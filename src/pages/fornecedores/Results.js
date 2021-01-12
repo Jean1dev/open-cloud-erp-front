@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
+  Avatar,
   Box,
   Card,
   Checkbox,
@@ -14,7 +15,6 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -23,40 +23,41 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
+const Results = ({ className, data, reload, page, limit, ...rest }) => {
   const classes = useStyles();
-  const [selectedIds, setSelectedIds] = useState([]);
+  const customers = data.content;
+  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
 
   const handleSelectAll = (event) => {
-    let newSelectedIds;
+    let newSelectedCustomerIds;
 
     if (event.target.checked) {
-      newSelectedIds = data.map((reg) => reg.id);
+      newSelectedCustomerIds = customers.map((customer) => customer.id);
     } else {
-      newSelectedIds = [];
+      newSelectedCustomerIds = [];
     }
 
-    setSelectedIds(newSelectedIds);
+    setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedIds.indexOf(id);
-    let newSelectedIds = [];
+    const selectedIndex = selectedCustomerIds.indexOf(id);
+    let newSelectedCustomerIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedIds = newSelectedIds.concat(selectedIds, id);
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedIds = newSelectedIds.concat(selectedIds.slice(1));
-    } else if (selectedIndex === selectedIds.length - 1) {
-      newSelectedIds = newSelectedIds.concat(selectedIds.slice(0, -1));
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
+    } else if (selectedIndex === selectedCustomerIds.length - 1) {
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedIds = newSelectedIds.concat(
-        selectedIds.slice(0, selectedIndex),
-        selectedIds.slice(selectedIndex + 1)
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(
+        selectedCustomerIds.slice(0, selectedIndex),
+        selectedCustomerIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedIds(newSelectedIds);
+    setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
   const handleLimitChange = (event) => {
@@ -79,37 +80,34 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedIds.length === data.length}
+                    checked={selectedCustomerIds.length === customers.length}
                     color="primary"
                     indeterminate={
-                      selectedIds.length > 0
-                      && selectedIds.length < data.length
+                      selectedCustomerIds.length > 0
+                      && selectedCustomerIds.length < customers.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
                 <TableCell>
-                  Data
+                  Nome
                 </TableCell>
                 <TableCell>
-                  Fornecedor
-                </TableCell>
-                <TableCell>
-                  Total
+                  Telefone
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.slice(0, limit).map((reg) => (
+              {customers.slice(0, limit).map((customer) => (
                 <TableRow
                   hover
-                  key={reg.id}
-                  selected={selectedIds.indexOf(reg.id) !== -1}
+                  key={customer.id}
+                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedIds.indexOf(reg.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, reg.id)}
+                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, customer.id)}
                       value="true"
                     />
                   </TableCell>
@@ -118,11 +116,17 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                       alignItems="center"
                       display="flex"
                     >
+                      <Avatar
+                        className={classes.avatar}
+                        src=""
+                      >
+                        {customer.name}
+                      </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {moment(reg.dataCompra).format('DD/MM/yyyy')}
+                        {customer.nome}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -135,20 +139,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {reg.fornecedor?.nome}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      alignItems="center"
-                      display="flex"
-                    >
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        R$ {reg.valorTotal}
+                        {customer.telefone}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -160,7 +151,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={total}
+        count={data.totalElements}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleLimitChange}
         page={page}
