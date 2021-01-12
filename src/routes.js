@@ -21,6 +21,7 @@ import Vendas from 'src/pages/vendas';
 import SelecaoRelatorio from 'src/pages/relatorios';
 import FornecedoresListView from 'src/pages/fornecedores';
 import CadastroFornecedor from 'src/pages/fornecedores/CadastroFornecedor';
+import TitulosAReceberListView from 'src/pages/titulosAReceber';
 
 const routes = [
   {
@@ -34,6 +35,7 @@ const routes = [
       { path: 'cadastro-compra', element: <CadastroCompra /> },
       { path: 'cadastro-venda', element: <CadastroVenda /> },
       { path: 'customers', element: <CustomerListView /> },
+      { path: 'titulos-a-receber', element: <TitulosAReceberListView /> },
       { path: 'fornecedores', element: <FornecedoresListView /> },
       { path: 'relatorios', element: <SelecaoRelatorio /> },
       { path: 'compras', element: <Compras /> },
