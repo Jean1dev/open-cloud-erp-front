@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 const Results = ({ className, data, reload, page, limit, ...rest }) => {
   const classes = useStyles();
   const products = data.content;
-  console.log(products)
   const [selectedIds, setSelectedIds] = useState([]);
   const navigate = useNavigate()
 
