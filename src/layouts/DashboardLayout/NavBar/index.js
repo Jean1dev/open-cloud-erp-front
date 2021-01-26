@@ -25,7 +25,7 @@ import NavItem from './NavItem';
 
 const user = {
   avatar: '/static/images/avatars/logo.jpg',
-  jobTitle: 'Tem de tudo',
+  jobTitle: 'Globo EPI',
   name: 'Nilton'
 };
 
