@@ -9,7 +9,7 @@ import {
     Divider,
     Grid,
     TextField,
-    makeStyles
+    makeStyles,
 } from '@material-ui/core';
 import api, { baseURL } from 'src/service/api';
 
@@ -21,8 +21,12 @@ const SelecaoRelatorio = ({ className, ...rest }) => {
     const classes = useStyles();
     const [values, setValues] = useState({
         tipos: [],
-        tipoSelecionado: ''
+        tipoSelecionado: '',
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1
     });
+    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    const years = [2021, 2022, 2023]
 
     const handleChange = (event) => {
         setValues({
@@ -34,6 +38,8 @@ const SelecaoRelatorio = ({ className, ...rest }) => {
     useEffect(() => {
         api.get('relatorios').then(response => {
             setValues({
+                year: new Date().getFullYear(),
+                month: new Date().getMonth() + 1,
                 tipoSelecionado: '',
                 tipos: response.data
             })
@@ -45,9 +51,7 @@ const SelecaoRelatorio = ({ className, ...rest }) => {
         if (values.tipoSelecionado === 'VENDAS_AGRUPADO_POR_CLIENTE') {
             url = `${baseURL}/relatorios/clientes-agrupados`
         } else {
-            const year = new Date().getFullYear()
-            const month = new Date().getMonth() + 1
-            url = `${baseURL}/relatorios/vendas-mensais?mes=${month}&ano=${year}`
+            url = `${baseURL}/relatorios/vendas-mensais?mes=${values.month}&ano=${values.year}`
         }
 
         var win = window.open(url, '_blank');
@@ -95,7 +99,53 @@ const SelecaoRelatorio = ({ className, ...rest }) => {
                                     </option>
                                 ))}
                             </TextField>
+
                         </Grid>
+                        {values.tipoSelecionado !== 'VENDAS_AGRUPADO_POR_CLIENTE' && (
+                            <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                name="month"
+                                onChange={handleChange}
+                                required
+                                select
+                                SelectProps={{ native: true }}
+                                value={values.month}
+                                variant="outlined"
+                            >
+                                {months.map((m) => (
+                                    <option
+                                        key={m}
+                                        value={m}
+                                    >
+                                        {m}
+                                    </option>
+                                ))}
+                            </TextField>
+                            <TextField
+                                name="year"
+                                onChange={handleChange}
+                                required
+                                select
+                                SelectProps={{ native: true }}
+                                value={values.year}
+                                variant="outlined"
+                            >
+                                {years.map((y) => (
+                                    <option
+                                        key={y}
+                                        value={y}
+                                    >
+                                        {y}
+                                    </option>
+                                ))}
+                            </TextField>
+
+                        </Grid>
+                        )}
                     </Grid>
                 </CardContent>
                 <Divider />
@@ -110,7 +160,7 @@ const SelecaoRelatorio = ({ className, ...rest }) => {
                         onClick={gerar}
                     >
                         Gerar
-          </Button>
+                    </Button>
                 </Box>
             </Card>
         </form>
