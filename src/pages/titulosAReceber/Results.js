@@ -24,6 +24,7 @@ import { DollarSign } from 'react-feather';
 import api from 'src/service/api';
 import { toastSuccess } from 'src/utils/toast';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -38,6 +39,11 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
     const [selectedIds, setSelectedIds] = useState([]);
     const [open, setOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(undefined);
+    const navigate = useNavigate()
+
+    const detalhesTitulo = useCallback((titulo) => {
+        navigate('../detalhamento-titulo', { replace: true, state: titulo })
+      }, [navigate])
 
     const handleSelectAll = (event) => {
         let newSelectedIds;
@@ -156,6 +162,7 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                                     hover
                                     key={reg.id}
                                     selected={selectedIds.indexOf(reg.id) !== -1}
+                                    onClick={() => detalhesTitulo(reg)}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
