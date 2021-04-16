@@ -20,7 +20,7 @@ import {
     DialogTitle,
     Button,
 } from '@material-ui/core';
-import { DollarSign } from 'react-feather';
+import { DollarSign, Info } from 'react-feather';
 import api from 'src/service/api';
 import { toastSuccess } from 'src/utils/toast';
 import moment from 'moment';
@@ -162,7 +162,7 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                                     hover
                                     key={reg.id}
                                     selected={selectedIds.indexOf(reg.id) !== -1}
-                                    onClick={() => detalhesTitulo(reg)}
+                                    
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
@@ -196,6 +196,9 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                                                 {reg.valor}
                                             </Typography>
                                         </Box>
+                                    </TableCell>
+                                    <TableCell padding="checkbox">
+                                        <Info onClick={() => detalhesTitulo(reg)} />
                                     </TableCell>
                                     <TableCell padding="checkbox">
                                         <DollarSign onClick={() => handleClickOpen(reg)} />

@@ -34,7 +34,7 @@ const ClienteSelect = ({ addCliente, className, ...rest }) => {
     useEffect(() => {
         api.get('cliente').then(response => {
             setClientes(response.data)
-            if (response.data.length > 1) {
+            if (response.data.length >= 1) {
                 addCliente(response.data[0].id)
             }
         })

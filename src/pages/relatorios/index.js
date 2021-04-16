@@ -10,6 +10,7 @@ import {
     Grid,
     TextField,
     makeStyles,
+    LinearProgress
 } from '@material-ui/core';
 import api, { baseURL } from 'src/service/api';
 
@@ -19,6 +20,7 @@ const useStyles = makeStyles(() => ({
 
 const SelecaoRelatorio = ({ className, ...rest }) => {
     const classes = useStyles();
+    const [loading, setLoading] = useState(true);
     const [values, setValues] = useState({
         tipos: [],
         tipoSelecionado: '',
@@ -43,6 +45,7 @@ const SelecaoRelatorio = ({ className, ...rest }) => {
                 tipoSelecionado: '',
                 tipos: response.data
             })
+            setLoading(false)
         })
     }, [])
 
@@ -57,6 +60,9 @@ const SelecaoRelatorio = ({ className, ...rest }) => {
         var win = window.open(url, '_blank');
         win.focus();
     }, [values])
+
+    if (loading) 
+        return <LinearProgress  />
 
     return (
         <form
