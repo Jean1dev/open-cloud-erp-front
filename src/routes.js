@@ -22,7 +22,10 @@ import SelecaoRelatorio from 'src/pages/relatorios';
 import FornecedoresListView from 'src/pages/fornecedores';
 import CadastroFornecedor from 'src/pages/fornecedores/CadastroFornecedor';
 import TitulosAReceberListView from 'src/pages/titulosAReceber';
-import DetalhamentoTitulos from 'src/pages/titulosAReceber/DetalhamentoTitulos'
+import DetalhamentoTitulos from 'src/pages/titulosAReceber/DetalhamentoTitulos';
+import FormularioOrcamento from 'src/pages/orcamento/FormularioOrcamento';
+import Orcamento from 'src/pages/orcamento'
+import TransformarEmVenda from 'src/pages/orcamento/TransformarEmVenda'
 
 const routes = [
   {
@@ -35,6 +38,8 @@ const routes = [
       { path: 'cadastro-produto', element: <CadastroProduto /> },
       { path: 'cadastro-compra', element: <CadastroCompra /> },
       { path: 'cadastro-venda', element: <CadastroVenda /> },
+      { path: 'formulario-orcamento', element: <FormularioOrcamento /> },
+      { path: 'transformar-em-venda', element: <TransformarEmVenda /> },
       { path: 'customers', element: <CustomerListView /> },
       { path: 'detalhamento-titulo', element: <DetalhamentoTitulos /> },
       { path: 'titulos-a-receber', element: <TitulosAReceberListView /> },
@@ -42,6 +47,7 @@ const routes = [
       { path: 'relatorios', element: <SelecaoRelatorio /> },
       { path: 'compras', element: <Compras /> },
       { path: 'vendas', element: <Vendas /> },
+      { path: 'orcamento', element: <Orcamento /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'dashboard-view', element: <ReportsView /> },
       { path: 'products', element: <ProductListView /> },

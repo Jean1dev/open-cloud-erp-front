@@ -19,7 +19,8 @@ import {
   DollarSign,
   FilePlus,
   UserCheck,
-  CreditCard
+  CreditCard,
+  File
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -54,6 +55,11 @@ const items = [
     href: '/app/compras',
     icon: ShoppingCart,
     title: 'Compras'
+  },
+  {
+    href: '/app/orcamento',
+    icon: File,
+    title: 'Orçamento'
   },
   {
     href: '/app/vendas',
