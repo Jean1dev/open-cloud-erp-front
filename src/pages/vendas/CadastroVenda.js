@@ -17,6 +17,7 @@ const CadastroVenda = () => {
     const [valorRecebido, setValorRecebido] = useState(0)
     const [items, setItems] = useState([])
     const [cliente, setCliente] = useState(undefined)
+    const [dataPagamento, setDataPagamento] = useState(undefined)
     const navigate = useNavigate()
 
     const atualizarVenda = items => {
@@ -30,7 +31,8 @@ const CadastroVenda = () => {
         api.post('venda', {
             cliente,
             valorRecebido,
-            itens: items
+            itens: items,
+            dataLimitePagamento: dataPagamento
         }).then(() => {
             toastSuccess('venda cadastrada')
             navigate('../vendas', { replace: true })
@@ -39,7 +41,7 @@ const CadastroVenda = () => {
             setLoading(false)
         })
 
-    }, [items, navigate, cliente, valorRecebido])
+    }, [items, navigate, cliente, valorRecebido, dataPagamento])
 
     const addCliente = useCallback(id => {
         setCliente(id)
@@ -53,13 +55,15 @@ const CadastroVenda = () => {
         <Card>
             <CardHeader
                 subheader="Cadastro venda" />
-                <VendasDetail 
-                    total={total} 
-                    valorRecebido={valorRecebido} 
+                <VendasDetail
+                    total={total}
+                    valorRecebido={valorRecebido}
                     setValorRecebido={setValorRecebido}
+                    setDataPagamento={setDataPagamento}
+                    dataPagamento={dataPagamento}
                     finalizar={finalizar}/>
                 <ClienteSelect addCliente={addCliente}/>
-                <ItemList 
+                <ItemList
                     items={items}
                     setItems={setItems}
                     atualizarVenda={atualizarVenda} />

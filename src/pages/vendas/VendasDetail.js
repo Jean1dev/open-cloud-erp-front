@@ -32,6 +32,8 @@ const VendasDetail = ({
     total,
     setValorRecebido,
     valorRecebido,
+    setDataPagamento,
+    dataPagamento,
     className,
     ...rest
 }) => {
@@ -73,6 +75,19 @@ const VendasDetail = ({
                                             type="number"
                                             value={valorRecebido}
                                             variant="outlined"
+                                        />
+                                        <TextField
+                                            fullWidth
+                                            label="Data de limite de pagamento"
+                                            margin="normal"
+                                            name="dataPagamento"
+                                            onChange={e => setDataPagamento(e.target.value)}
+                                            type="date"
+                                            value={dataPagamento}
+                                            variant="outlined"
+                                            InputLabelProps={{
+                                                shrink: true
+                                            }}
                                         />
 
                                     </Grid>
