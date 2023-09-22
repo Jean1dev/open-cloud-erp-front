@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import clsx from 'clsx';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -15,6 +15,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import { useNavigate } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -27,6 +28,7 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
   const classes = useStyles();
   const customers = data.content;
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+  const navigate = useNavigate();
 
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
@@ -68,6 +70,10 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
     reload(limit, newPage);
   };
 
+  const update = useCallback((item) => {
+    navigate(`../cadastro-cliente/${item.id}`, { replace: true, state: item })
+  }, [navigate])
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -103,6 +109,7 @@ const Results = ({ className, data, reload, page, limit, ...rest }) => {
                   hover
                   key={customer.id}
                   selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  onClick={() => update(customer)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox

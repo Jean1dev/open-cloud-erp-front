@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import api from 'src/service/api';
 import { toastSuccess } from 'src/utils/toast';
+import { useLocation } from 'react-router';
 
 const useStyles = makeStyles(({
   root: {}
@@ -22,10 +23,12 @@ const useStyles = makeStyles(({
 const CadastroCliente = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
+    id: null,
     nome: '',
     telefone: ''
   });
   const [loading, setLoading] = useState(false);
+  const { state } = useLocation();
 
   const handleChange = (event) => {
     setValues({
@@ -34,24 +37,47 @@ const CadastroCliente = ({ className, ...rest }) => {
     });
   };
 
+  useEffect(() => {
+    if (state) {
+      setValues({
+        id: state.id,
+        nome: state.nome,
+        telefone: state.telefone
+      })
+    }
+  }, [state])
+
   const submitForm = useCallback(() => {
-    api.post('cliente', {
+    function success() {
+      const message = values.id ? 'Cliente Atualizado' : 'Cliente cadastrado com sucesso'
+      toastSuccess(message)
+      setValues({
+        nome: '',
+        telefone: ''
+      })
+      setLoading(false)
+    }
+
+    if (values.id) {
+      api.put('cliente', {
+        id: values.id,
         nome: values.nome,
         telefone: values.telefone
-    }).then(() => {
-        toastSuccess('Cliente cadastrado com sucesso')
-        setValues({
-            nome: '',
-            telefone: ''
-        })
-        setLoading(false)    
-    })    
+      }).then(success)
+
+    } else {
+
+      api.post('cliente', {
+        nome: values.nome,
+        telefone: values.telefone
+      }).then(success)
+    }
 
     setLoading(true)
   }, [values])
 
   if (loading) {
-      return <LinearProgress/>
+    return <LinearProgress />
   }
 
   return (
@@ -61,7 +87,7 @@ const CadastroCliente = ({ className, ...rest }) => {
     >
       <Card>
         <CardHeader
-          subheader="inserindo novo cliente"
+          subheader={state.id ? 'Atualizacao de cliente' : 'inserindo novo cliente'}
           title="Cliente"
         />
         <Divider />
@@ -98,7 +124,7 @@ const CadastroCliente = ({ className, ...rest }) => {
             variant="contained"
             onClick={submitForm}
           >
-            Salvar
+            {state.id ? 'Atualizar' : 'Salvar'}
           </Button>
         </Box>
       </Card>

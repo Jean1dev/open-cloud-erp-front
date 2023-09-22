@@ -34,6 +34,7 @@ const routes = [
     children: [
       { path: 'account', element: <AccountView /> },
       { path: 'cadastro-cliente', element: <CadastroCliente /> },
+      { path: 'cadastro-cliente/:id', element: <CadastroCliente /> },
       { path: 'cadastro-fornecedor', element: <CadastroFornecedor /> },
       { path: 'cadastro-produto', element: <CadastroProduto /> },
       { path: 'cadastro-compra', element: <CadastroCompra /> },

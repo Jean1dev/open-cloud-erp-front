@@ -19,6 +19,7 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  TextField,
 } from '@material-ui/core';
 import moment from 'moment';
 import { Share2, Trash, ExternalLink } from 'react-feather';
@@ -37,7 +38,9 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
   const classes = useStyles();
   const [selectedIds, setSelectedIds] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openEnviarComprovante, setopenEnviarComprovante] = useState(false);
   const [selectedItem, setSelectedItem] = useState(undefined);
+  const [telefone, setTelefone] = useState('');
   const navigate = useNavigate();
 
   const handleSelectAll = (event) => {
@@ -63,6 +66,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setopenEnviarComprovante(false);
   };
 
   const handleSelectOne = (event, id) => {
@@ -94,9 +98,19 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
   };
 
   const generateReport = useCallback((id) => {
-    var win = window.open(`${baseURL}/orcamento/gerar-comprovante?id=${id}`, '_blank');
-    win.focus();
+    setopenEnviarComprovante(true)
+    setSelectedItem(id)
+    window.open(`${baseURL}/orcamento/gerar-comprovante?id=${id}`, '_blank');
   }, [])
+
+  const enviarComprovantePeloWhatsapp = useCallback(() => {
+    api.post(`orcamento/${selectedItem}/enviar-comprovante?fone=${telefone}`)
+      .then(() => {
+        toastSuccess('Orçamento enviado');
+        handleClose();
+      })
+
+  }, [selectedItem, telefone])
 
   const excluir = useCallback(() => {
     api.delete(`orcamento/${selectedItem.id}`).then(() => {
@@ -114,6 +128,33 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
       <PerfectScrollbar>
         <Box minWidth={1050}>
           <Dialog
+            open={openEnviarComprovante}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Digite o numero para quem enviar esse comprovante</DialogTitle>
+            <DialogContent>
+              <TextField fullWidth
+                label="telefone"
+                margin="normal"
+                name="telefone"
+                onChange={(e) => setTelefone(e.target.value)}
+                type="text"
+                value={telefone}
+                variant="outlined">
+              </TextField>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Voltar
+              </Button>
+              <Button onClick={enviarComprovantePeloWhatsapp} color="primary" autoFocus>
+                Enviar
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
@@ -128,10 +169,10 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Voltar
-                            </Button>
+              </Button>
               <Button onClick={excluir} color="primary" autoFocus>
                 Excluir
-                            </Button>
+              </Button>
             </DialogActions>
           </Dialog>
           <Table>
