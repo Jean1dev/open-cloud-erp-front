@@ -26,6 +26,7 @@ import { Share2, Trash, ExternalLink } from 'react-feather';
 import api, { baseURL } from '../../service/api'
 import { toastSuccess } from 'src/utils/toast';
 import { useNavigate } from 'react-router-dom';
+import ClienteSelect from '../vendas/ClienteSelect';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -120,6 +121,11 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
     })
   }, [selectedItem, limit, page, reload])
 
+  const clienteChange = useCallback((id) => {
+    api.get(`cliente/telefone?id=${id}`)
+      .then(response => setTelefone(response.data))
+  }, [])
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -135,6 +141,7 @@ const Results = ({ className, data, reload, page, limit, total, ...rest }) => {
           >
             <DialogTitle id="alert-dialog-title">Digite o numero para quem enviar esse comprovante</DialogTitle>
             <DialogContent>
+              <ClienteSelect addCliente={clienteChange} />
               <TextField fullWidth
                 label="telefone"
                 margin="normal"
