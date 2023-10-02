@@ -87,7 +87,7 @@ const CadastroCliente = ({ className, ...rest }) => {
     >
       <Card>
         <CardHeader
-          subheader={state.id ? 'Atualizacao de cliente' : 'inserindo novo cliente'}
+          subheader={values.id ? 'Atualizacao de cliente' : 'inserindo novo cliente'}
           title="Cliente"
         />
         <Divider />
@@ -124,7 +124,7 @@ const CadastroCliente = ({ className, ...rest }) => {
             variant="contained"
             onClick={submitForm}
           >
-            {state.id ? 'Atualizar' : 'Salvar'}
+            {values.id ? 'Atualizar' : 'Salvar'}
           </Button>
         </Box>
       </Card>
