@@ -6,6 +6,9 @@ export default defineConfig({
   plugins: [
     react()
   ],
+  build: {
+    outDir: 'build', // Nome do diretório de build personalizado
+  },
   resolve: {
     alias: {
       'src': path.resolve(__dirname, './src')
