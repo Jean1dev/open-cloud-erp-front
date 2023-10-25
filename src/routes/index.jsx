@@ -5,6 +5,9 @@ import { Outlet } from "react-router-dom";
 const FornecedoresListView = lazy(() => import('src/pages/fornecedor'))
 const CadastroFornecedor = lazy(() => import('src/pages/fornecedor/cadastro'))
 
+const ClienteListView = lazy(() => import('src/pages/cliente'))
+const CadastroCliente = lazy(() => import('src/pages/cliente/cadastro'))
+
 export const routes = [
     {
         path: '/',
@@ -30,6 +33,23 @@ export const routes = [
                     {
                         path: 'cadastrar',
                         element: <CadastroFornecedor />
+                    }
+                ]
+            },
+            {
+                path: 'cliente',
+                children: [
+                    {
+                        index: true,
+                        element: <ClienteListView />
+                    },
+                    {
+                        path: 'cadastrar',
+                        element: <CadastroCliente />,
+                        children: [{
+                            path: ':id',
+                            element: <CadastroCliente />,
+                        }]
                     }
                 ]
             }

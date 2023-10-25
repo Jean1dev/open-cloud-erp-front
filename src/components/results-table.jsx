@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
-import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Table from '@mui/material/Table';
@@ -15,18 +12,15 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 
 import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
-import { paths } from 'src/paths';
-import { getInitials } from 'src/utils/get-initials';
 
 export const ResultsListTable = (props) => {
     const {
         count = 0, items = [], onDeselectAll, onDeselectOne, onPageChange = () => {
         }, onRowsPerPageChange, onSelectAll, onSelectOne, page = 0, rowsPerPage = 0, selected = [],
-        cellName = []
+        cellName = [], editAction = () => {}
     } = props;
 
     const selectedSome = (selected.length > 0) && (selected.length < items.length);
@@ -137,21 +131,20 @@ export const ResultsListTable = (props) => {
 
                                     <TableCell align="right">
                                         <IconButton
-                                            component={RouterLink}
-                                            href={paths.fornecedor.cadastro}
+                                            onClick={() => editAction(item)}
                                         >
                                             <SvgIcon>
                                                 <Edit02Icon />
                                             </SvgIcon>
                                         </IconButton>
-                                        <IconButton
+                                        {/* <IconButton
                                             component={RouterLink}
                                             href={paths.fornecedor.cadastro}
                                         >
                                             <SvgIcon>
                                                 <ArrowRightIcon />
                                             </SvgIcon>
-                                        </IconButton>
+                                        </IconButton> */}
                                     </TableCell>
                                 </TableRow>
                             );
@@ -186,4 +179,5 @@ ResultsListTable.propTypes = {
     rowsPerPage: PropTypes.number,
     selected: PropTypes.array,
     cellName: PropTypes.array,
+    editAction: PropTypes.func
 };

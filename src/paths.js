@@ -3,5 +3,9 @@ export const paths = {
     fornecedor: {
         list: '/fornecedor',
         cadastro: '/fornecedor/cadastrar'
+    },
+    cliente: {
+        list: '/cliente',
+        cadastro: '/cliente/cadastrar'
     }
 }

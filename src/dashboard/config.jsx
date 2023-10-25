@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { paths } from "src/paths"
 import { SvgIcon } from "@mui/material"
-import { HomeSmile, UserCheck01 } from "@untitled-ui/icons-react"
+import { HomeSmile, UserCheck01, Users01 } from "@untitled-ui/icons-react"
 
 export const useSections = () => {
     return useMemo(() => {
@@ -35,6 +35,15 @@ export const useSections = () => {
                                 path: paths.fornecedor.cadastro
                             }
                         ]
+                    },
+                    {
+                        title: 'Cliente',
+                        path: paths.cliente.list,
+                        icon: (
+                            <SvgIcon fontSize="small">
+                                <Users01/>
+                            </SvgIcon>
+                        ),
                     }
                 ]
             }

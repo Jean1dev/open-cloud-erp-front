@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -9,13 +9,26 @@ import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress'
 import api from 'src/api'
 import toast from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 
-const CadastroFornecedor = () => {
+const CadastroCliente = () => {
     const [values, setValues] = useState({
+        id: null,
         nome: '',
         telefone: ''
     });
     const [loading, setLoading] = useState(false);
+    const { state } = useLocation()
+
+    useEffect(() => {
+        if (state) {
+            setValues({
+                id: state.id,
+                nome: state.nome,
+                telefone: state.telefone
+            })
+        }
+    }, [state])
 
     const handleChange = (event) => {
         setValues({
@@ -26,17 +39,30 @@ const CadastroFornecedor = () => {
 
     const submitForm = useCallback((event) => {
         event.preventDefault()
-        api.post('fornecedor', {
-            nome: values.nome,
-            telefone: values.telefone
-        }).then(() => {
-            toast('Fornecedor cadastrado com sucesso')
+        function success() {
+            const message = values.id ? 'Cliente Atualizado' : 'Cliente cadastrado com sucesso'
+            toast(message)
             setValues({
                 nome: '',
                 telefone: ''
             })
             setLoading(false)
-        })
+        }
+
+        if (values.id) {
+            api.put('cliente', {
+                id: values.id,
+                nome: values.nome,
+                telefone: values.telefone
+            }).then(success)
+
+        } else {
+
+            api.post('cliente', {
+                nome: values.nome,
+                telefone: values.telefone
+            }).then(success)
+        }
 
         setLoading(true)
     }, [values])
@@ -61,7 +87,7 @@ const CadastroFornecedor = () => {
                 }}>
                 <Container maxWidth="xl">
                     <Typography variant="h4">
-                        Fornecedor
+                        Cliente
                     </Typography>
                     <Box sx={{ p: 3 }}>
                         <form onSubmit={submitForm}>
@@ -114,4 +140,4 @@ const CadastroFornecedor = () => {
     );
 };
 
-export default CadastroFornecedor
+export default CadastroCliente
