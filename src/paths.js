@@ -7,5 +7,9 @@ export const paths = {
     cliente: {
         list: '/cliente',
         cadastro: '/cliente/cadastrar'
+    },
+    produto: {
+        list: '/produto',
+        cadastro: '/produto/cadastrar'
     }
 }

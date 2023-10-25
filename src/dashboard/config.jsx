@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { paths } from "src/paths"
 import { SvgIcon } from "@mui/material"
 import { HomeSmile, UserCheck01, Users01 } from "@untitled-ui/icons-react"
+import { ShoppingBag } from "@mui/icons-material"
 
 export const useSections = () => {
     return useMemo(() => {
@@ -42,6 +43,15 @@ export const useSections = () => {
                         icon: (
                             <SvgIcon fontSize="small">
                                 <Users01/>
+                            </SvgIcon>
+                        ),
+                    },
+                    {
+                        title: 'Produto',
+                        path: paths.produto.list,
+                        icon: (
+                            <SvgIcon fontSize="small">
+                                <ShoppingBag/>
                             </SvgIcon>
                         ),
                     }

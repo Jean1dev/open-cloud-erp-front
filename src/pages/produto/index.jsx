@@ -17,7 +17,7 @@ import { Plus } from '@untitled-ui/icons-react';
 import { ResultsListTable } from '../../components/results-table';
 import { useNavigate } from 'react-router-dom';
 
-const ClienteListView = () => {
+const ProdutoListView = () => {
   const [items, setItems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(5);
@@ -25,7 +25,7 @@ const ClienteListView = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    api.get('cliente/paginated', {
+    api.get('produto/paginated', {
       params: {
         limit: limit,
         offset: page
@@ -71,7 +71,7 @@ const ClienteListView = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Clientes
+                  Produtos
                 </Typography>
                 <Stack
                   alignItems="center"
@@ -114,9 +114,9 @@ const ClienteListView = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
-                  href={paths.cliente.cadastro}
+                  href={paths.produto.cadastro}
                 >
-                  Novo Cliente
+                  Novo Produto
                 </Button>
               </Stack>
             </Stack>
@@ -140,7 +140,7 @@ const ClienteListView = () => {
                 page={page}
                 rowsPerPage={limit}
                 // selected={customersSelection.selected}
-                cellName={['nome', 'telefone']}
+                cellName={['nome', 'ca', 'valorVenda', 'estoque']}
                 editAction={editAction}
               />
             </Card>
@@ -151,4 +151,4 @@ const ClienteListView = () => {
   );
 };
 
-export default ClienteListView;
+export default ProdutoListView;
