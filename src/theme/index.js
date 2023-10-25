@@ -1,27 +1,29 @@
-import { createMuiTheme, colors } from '@material-ui/core';
-import shadows from './shadows';
-import typography from './typography';
+import { createTheme as createMuiTheme, responsiveFontSizes } from '@mui/material/styles';
 
-const theme = createMuiTheme({
-  palette: {
-    background: {
-      dark: '#F4F6F8',
-      default: colors.common.white,
-      paper: colors.common.white
-    },
-    primary: {
-      main: colors.indigo[500]
-    },
-    secondary: {
-      main: colors.indigo[500]
-    },
-    text: {
-      primary: colors.blueGrey[900],
-      secondary: colors.blueGrey[600]
-    }
-  },
-  shadows,
-  typography
-});
+import { createOptions as createBaseOptions } from './base/create-options';
+import { createOptions as createDarkOptions } from './dark/create-options';
+import { createOptions as createLightOptions } from './light/create-options';
 
-export default theme;
+export const createTheme = (config) => {
+  let theme = createMuiTheme(
+    // Base options available for both dark and light palette modes
+    createBaseOptions({
+      direction: config.direction
+    }),
+    // Options based on selected palette mode, color preset and contrast
+    config.paletteMode === 'dark'
+      ? createDarkOptions({
+        colorPreset: config.colorPreset,
+        contrast: config.contrast
+      })
+      : createLightOptions({
+        colorPreset: config.colorPreset,
+        contrast: config.contrast
+      }));
+
+  if (config.responsiveFontSizes) {
+    theme = responsiveFontSizes(theme);
+  }
+
+  return theme;
+};
