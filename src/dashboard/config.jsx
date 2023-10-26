@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { paths } from "src/paths"
 import { SvgIcon } from "@mui/material"
-import { HomeSmile, UserCheck01, Users01 } from "@untitled-ui/icons-react"
+import { CurrencyDollar, HomeSmile, UserCheck01, Users01 } from "@untitled-ui/icons-react"
 import { ShoppingBag } from "@mui/icons-material"
 
 export const useSections = () => {
@@ -14,7 +14,7 @@ export const useSections = () => {
                         path: paths.index,
                         icon: (
                             <SvgIcon fontSize="small">
-                                <HomeSmile/>
+                                <HomeSmile />
                             </SvgIcon>
                         )
                     },
@@ -23,7 +23,7 @@ export const useSections = () => {
                         path: paths.fornecedor.list,
                         icon: (
                             <SvgIcon fontSize="small">
-                                <UserCheck01/>
+                                <UserCheck01 />
                             </SvgIcon>
                         ),
                         items: [
@@ -42,7 +42,7 @@ export const useSections = () => {
                         path: paths.cliente.list,
                         icon: (
                             <SvgIcon fontSize="small">
-                                <Users01/>
+                                <Users01 />
                             </SvgIcon>
                         ),
                     },
@@ -51,9 +51,28 @@ export const useSections = () => {
                         path: paths.produto.list,
                         icon: (
                             <SvgIcon fontSize="small">
-                                <ShoppingBag/>
+                                <ShoppingBag />
                             </SvgIcon>
                         ),
+                    },
+                    {
+                        title: 'Venda',
+                        path: paths.venda.list,
+                        icon: (
+                            <SvgIcon fontSize="small">
+                                <CurrencyDollar />
+                            </SvgIcon>
+                        ),
+                        items: [
+                            {
+                                title: 'Consultar vendas',
+                                path: paths.venda.list
+                            },
+                            {
+                                title: 'Nova venda',
+                                path: paths.venda.criar
+                            }
+                        ]
                     }
                 ]
             }

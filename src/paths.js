@@ -11,5 +11,9 @@ export const paths = {
     produto: {
         list: '/produto',
         cadastro: '/produto/cadastrar'
+    },
+    venda: {
+        list: '/venda',
+        criar: '/venda/nova-venda'
     }
 }

@@ -11,6 +11,9 @@ const CadastroCliente = lazy(() => import('src/pages/cliente/cadastro'))
 const ProdutoListView = lazy(() => import('src/pages/produto'))
 const CadastroProduto = lazy(() => import('src/pages/produto/cadastro'))
 
+const VendaListView = lazy(() => import('src/pages/venda'))
+const NovaVenda = lazy(() => import('src/pages/venda/nova-venda'))
+
 export const routes = [
     {
         path: '/',
@@ -72,7 +75,20 @@ export const routes = [
                         }]
                     }
                 ]
-            }
+            },
+            {
+                path: 'venda',
+                children: [
+                    {
+                        index: true,
+                        element: <VendaListView />
+                    },
+                    {
+                        path: 'nova-venda',
+                        element: <NovaVenda />
+                    }
+                ]
+            },
         ]
     },
 ]

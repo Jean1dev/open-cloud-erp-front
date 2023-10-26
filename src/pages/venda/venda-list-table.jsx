@@ -1,33 +1,88 @@
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import SvgIcon from '@mui/material/SvgIcon';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import {
+    Box,
+    Button,
+    Dialog,
+    Checkbox,
+    IconButton,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Stack,
+    SvgIcon,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TablePagination,
+    TableRow
+} from '@mui/material'
 
 import { Scrollbar } from 'src/components/scrollbar';
+import { Trash01 } from '@untitled-ui/icons-react';
+import { Share } from '@mui/icons-material';
+import api, { baseURL } from 'src/api'
+import toast from 'react-hot-toast';
 
-export const ResultsListTable = (props) => {
+export const VendaListTable = (props) => {
     const {
         count = 0, items = [], onDeselectAll, onDeselectOne, onPageChange = () => {
         }, onRowsPerPageChange, onSelectAll, onSelectOne, page = 0, rowsPerPage = 0, selected = [],
-        cellName = [], editAction = () => {}
     } = props;
+    const [open, setOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(undefined);
 
     const selectedSome = (selected.length > 0) && (selected.length < items.length);
     const selectedAll = (items.length > 0) && (selected.length === items.length);
     const enableBulkActions = selected.length > 0;
 
+    const handleClickOpen = registro => {
+        setOpen(true);
+        setSelectedItem(registro);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const generateReport = useCallback((id) => {
+        var win = window.open(`${baseURL}/venda/gerar-comprovante?id=${id}`, '_blank');
+        win.focus();
+    }, [])
+
+    const excluir = useCallback(() => {
+        api.delete(`venda/${selectedItem.id}`).then(() => {
+            toast('Venda excluida');
+            handleClose();
+            onPageChange(page);
+        })
+    }, [selectedItem, page])
+
     return (
         <Box sx={{ position: 'relative' }}>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Você tem certeza que quer excluir essa venda?"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Venda de R$ {selectedItem?.valorTotal} para o cliente {selectedItem?.cliente?.nome}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Voltar
+                    </Button>
+                    <Button onClick={excluir} color="primary" autoFocus>
+                        Excluir
+                    </Button>
+                </DialogActions>
+            </Dialog>
             {enableBulkActions && (
                 <Stack
                     direction="row"
@@ -89,9 +144,15 @@ export const ResultsListTable = (props) => {
                                     }}
                                 />
                             </TableCell>
-                            {
-                                cellName.map((name, index) => (<TableCell key={index}>{name}</TableCell>))
-                            }
+                            <TableCell>
+                                Data venda
+                            </TableCell>
+                            <TableCell>
+                                Cliente
+                            </TableCell>
+                            <TableCell>
+                                Valor R$
+                            </TableCell>
                             <TableCell align="right">
                                 Actions
                             </TableCell>
@@ -120,30 +181,31 @@ export const ResultsListTable = (props) => {
                                             value={isSelected}
                                         />
                                     </TableCell>
-                                    {
-                                        cellName.map((name, index) => (
-                                            <TableCell key={index}>
-                                                {item[name]}
-                                            </TableCell>
-                                        ))
-                                    }
+                                    <TableCell>
+                                        {item.dataVenda}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item.cliente?.nome}
+                                    </TableCell>
+                                    <TableCell>
+                                        R$ {item.valorTotal}
+                                    </TableCell>
 
                                     <TableCell align="right">
                                         <IconButton
-                                            onClick={() => editAction(item)}
+                                            onClick={() => handleClickOpen(item)}
                                         >
                                             <SvgIcon>
-                                                <Edit02Icon />
+                                                <Trash01 />
                                             </SvgIcon>
                                         </IconButton>
-                                        {/* <IconButton
-                                            component={RouterLink}
-                                            href={paths.fornecedor.cadastro}
+                                        <IconButton
+                                            onClick={() => generateReport(item.id)}
                                         >
                                             <SvgIcon>
-                                                <ArrowRightIcon />
+                                                <Share />
                                             </SvgIcon>
-                                        </IconButton> */}
+                                        </IconButton>
                                     </TableCell>
                                 </TableRow>
                             );
@@ -165,7 +227,7 @@ export const ResultsListTable = (props) => {
     );
 };
 
-ResultsListTable.propTypes = {
+VendaListTable.propTypes = {
     count: PropTypes.number,
     items: PropTypes.array,
     onDeselectAll: PropTypes.func,
@@ -177,6 +239,4 @@ ResultsListTable.propTypes = {
     page: PropTypes.number,
     rowsPerPage: PropTypes.number,
     selected: PropTypes.array,
-    cellName: PropTypes.array,
-    editAction: PropTypes.func
 };
