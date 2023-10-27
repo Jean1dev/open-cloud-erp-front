@@ -16,6 +16,7 @@ import { Download, Upload } from '@mui/icons-material';
 import { Plus } from '@untitled-ui/icons-react';
 import { ResultsListTable } from '../../components/results-table';
 import { useNavigate } from 'react-router-dom';
+import { RouterLink } from 'src/components/router-link';
 
 const ClienteListView = () => {
   const [items, setItems] = useState(null);
@@ -114,6 +115,7 @@ const ClienteListView = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
+                  LinkComponent={RouterLink}
                   href={paths.cliente.cadastro}
                 >
                   Novo Cliente

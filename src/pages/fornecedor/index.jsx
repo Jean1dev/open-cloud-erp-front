@@ -15,6 +15,7 @@ import {
 import { Download, Upload } from '@mui/icons-material';
 import { Plus } from '@untitled-ui/icons-react';
 import { ResultsListTable } from '../../components/results-table';
+import { RouterLink } from 'src/components/router-link';
 
 const FornecedoresListView = () => {
   const [items, setItems] = useState(null);
@@ -108,6 +109,7 @@ const FornecedoresListView = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
+                  LinkComponent={RouterLink}
                   href={paths.fornecedor.cadastro}
                 >
                   Novo Fornecedor
