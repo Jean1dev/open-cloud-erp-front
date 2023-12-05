@@ -27,4 +27,8 @@ instance.interceptors.response.use((response) => {
     throw error
 })
 
+export function addXTenant(tenant) {
+    instance.defaults.headers.common['X-Tenant'] = tenant.replace(' ', '_').toLowerCase()
+}
+
 export default instance 

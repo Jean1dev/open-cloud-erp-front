@@ -10,8 +10,6 @@ import { usePopover } from '../../hooks/use-popover';
 
 import { TenantPopover } from './tenant-popover';
 
-const tenants = ['Globo EPI', 'Acme Corp'];
-
 export const TenantSwitch = (props) => {
   const popover = usePopover();
 
@@ -33,7 +31,7 @@ export const TenantSwitch = (props) => {
             color="neutral.400"
             variant="body2"
           >
-            Globo EPI
+            {popover.selectedTenant}
           </Typography>
         </Box>
         <IconButton
@@ -47,10 +45,10 @@ export const TenantSwitch = (props) => {
       </Stack>
       <TenantPopover
         anchorEl={popover.anchorRef.current}
-        onChange={popover.handleClose}
+        onChange={popover.changeTenant}
         onClose={popover.handleClose}
         open={popover.open}
-        tenants={tenants}
+        tenants={popover.tenants}
       />
     </>
   );
