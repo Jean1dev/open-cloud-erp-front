@@ -1,7 +1,13 @@
 import { useMemo } from "react"
 import { paths } from "src/paths"
 import { SvgIcon } from "@mui/material"
-import { CurrencyDollar, HomeSmile, UserCheck01, Users01 } from "@untitled-ui/icons-react"
+import { 
+    CurrencyDollar, 
+    HomeSmile, 
+    UserCheck01, 
+    Users01,
+    Pencil01
+} from "@untitled-ui/icons-react"
 import { ShoppingBag } from "@mui/icons-material"
 
 export const useSections = () => {
@@ -54,6 +60,25 @@ export const useSections = () => {
                                 <ShoppingBag />
                             </SvgIcon>
                         ),
+                    },
+                    {
+                        title: 'Orcamento',
+                        path: paths.orcamento.list,
+                        icon: (
+                            <SvgIcon fontSize="small">
+                                <Pencil01 />
+                            </SvgIcon>
+                        ),
+                        items: [
+                            {
+                                title: 'Consultar Orcamento',
+                                path: paths.orcamento.list
+                            },
+                            {
+                                title: 'Novo Orcamento',
+                                path: paths.orcamento.criar
+                            }
+                        ]
                     },
                     {
                         title: 'Venda',

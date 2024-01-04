@@ -17,12 +17,12 @@ import { Seo } from 'src/components/seo'
 import { ArrowLeft } from '@mui/icons-material';
 import { RouterLink } from 'src/components/router-link';
 import { paths } from "../../paths";
-import { VendaProgresso } from "./venda-progresso";
 import { SelecionarClientStep } from "./selecionar-client-step";
 import { CarrinhoProdutos } from "./carrinho-produto";
-import { FinalizarVenda } from "./finalizar-venda";
+import { OrcamentoProgresso } from "./orcamento-progresso";
+import { FinalizarOrcamento } from "./finalizar-orcamento";
 
-function NovaVenda() {
+function NovoOrcamento() {
     const [activeChapter, setActiveChapter] = useState(0)
     const [steps, setSteps] = useState({
         chapters: [
@@ -38,14 +38,14 @@ function NovaVenda() {
             },
             {
                 title: 'Conferencia',
-                description: 'Confira se a venda esta de acordo',
+                description: 'Confira se o orcamento esta de acordo',
                 step: 3
             }
         ],
-        description: 'Criar uma nova venda',
+        description: 'Criar um novo orcamento',
         duration: '15 min',
         progress: 0,
-        title: 'Nova venda'
+        title: 'Novo orcamento'
     })
     const [loading, setLoading] = useState(false)
     const [total, setTotal] = useState(0)
@@ -97,7 +97,7 @@ function NovaVenda() {
 
     return (
         <>
-            <Seo title="Nova venda" />
+            <Seo title="Novo orcamento" />
             <Box component="main"
                 sx={{
                     flexGrow: 1,
@@ -133,7 +133,7 @@ function NovaVenda() {
                                         </Typography>
                                     </Link>
                                 </div>
-                                <VendaProgresso steps={steps} activeChapter={activeChapter} />
+                                <OrcamentoProgresso steps={steps} activeChapter={activeChapter} />
                             </Stack>
                         </Grid>
                         <Grid
@@ -159,7 +159,7 @@ function NovaVenda() {
                             }
                             {
                                 activeChapter == 2 && (
-                                    <FinalizarVenda
+                                    <FinalizarOrcamento
                                         back={() => setActiveChapter(1)}
                                         fecharVenda={finalizar}
                                         venda={{
@@ -177,4 +177,4 @@ function NovaVenda() {
     )
 }
 
-export default NovaVenda
+export default NovoOrcamento

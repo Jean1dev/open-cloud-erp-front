@@ -13,7 +13,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-export const FinalizarVenda = ({ fecharVenda, venda, back }) => {
+export const FinalizarOrcamento = ({ fecharVenda, venda, back }) => {
     const valorTotal = `R$ ${venda.valor.toFixed(2)}`
     const subtotalAmount = valorTotal;
     const shippingAmount = valorTotal;
@@ -30,7 +30,7 @@ export const FinalizarVenda = ({ fecharVenda, venda, back }) => {
                     variant="outlined"
                 >
                     <Typography variant="h6">
-                        Pedido de venda
+                        Orcamento
                     </Typography>
                     <List sx={{ mt: 2 }}>
                         {venda.produtos.map((product) => {
