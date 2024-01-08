@@ -18,6 +18,7 @@ export const paths = {
     },
     orcamento: {
         list: '/orcamento',
-        criar: '/orcamento/novo-orcamento'
+        criar: '/orcamento/novo-orcamento',
+        transformarEmVenda: '/orcamento/transformar-em-venda'
     }
 }

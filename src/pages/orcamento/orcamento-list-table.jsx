@@ -22,11 +22,12 @@ import {
 } from '@mui/material'
 
 import { Scrollbar } from 'src/components/scrollbar';
-import { Trash01 } from '@untitled-ui/icons-react';
+import { Trash01, LinkExternal01 } from '@untitled-ui/icons-react';
 import { Share } from '@mui/icons-material';
 import api, { baseURL } from 'src/api'
 import toast from 'react-hot-toast';
 import ClienteSelect from 'src/components/cliente-select';
+import { useNavigate } from 'react-router-dom';
 
 export const OrcamentoListTable = (props) => {
     const {
@@ -43,6 +44,7 @@ export const OrcamentoListTable = (props) => {
         selected = [],
     } = props;
 
+    const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [openEnviarComprovante, setopenEnviarComprovante] = useState(false);
     const [selectedItem, setSelectedItem] = useState(undefined);
@@ -62,6 +64,10 @@ export const OrcamentoListTable = (props) => {
         setOpen(false);
         setopenEnviarComprovante(false)
     };
+
+    const transformEmVenda = orcamento => {
+        navigate('../orcamento/transformar-em-venda', { replace: true, state: orcamento })
+    }
 
     const generateReport = useCallback((id) => {
         setopenEnviarComprovante(true)
@@ -251,6 +257,13 @@ export const OrcamentoListTable = (props) => {
                                     </TableCell>
 
                                     <TableCell align="right">
+                                        <IconButton
+                                            onClick={() => transformEmVenda(item)}
+                                        >
+                                            <SvgIcon>
+                                                <LinkExternal01 />
+                                            </SvgIcon>
+                                        </IconButton>
                                         <IconButton
                                             onClick={() => handleClickOpen(item)}
                                         >
