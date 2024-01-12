@@ -15,5 +15,10 @@ export const paths = {
     venda: {
         list: '/venda',
         criar: '/venda/nova-venda'
+    },
+    orcamento: {
+        list: '/orcamento',
+        criar: '/orcamento/novo-orcamento',
+        transformarEmVenda: '/orcamento/transformar-em-venda'
     }
 }

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast';
 
-export const baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://api-open-cloud-erp-bc78e9246ecc.herokuapp.com'
+//export const baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://api-open-cloud-erp-bc78e9246ecc.herokuapp.com'
+export const baseURL = 'https://api-open-cloud-erp-bc78e9246ecc.herokuapp.com'
 
 const instance = axios.create({
     baseURL

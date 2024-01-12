@@ -13,8 +13,8 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-export const FinalizarVenda = ({ fecharVenda, venda, back }) => {
-    const valorTotal = `R$ ${venda.valor.toFixed(2)}`
+export const FinalizarOrcamento = ({ concluir, data, back }) => {
+    const valorTotal = `R$ ${data.valor.toFixed(2)}`
     const subtotalAmount = valorTotal;
     const shippingAmount = valorTotal;
     const totalAmount = valorTotal;
@@ -23,17 +23,17 @@ export const FinalizarVenda = ({ fecharVenda, venda, back }) => {
         <Box sx={{ p: 3 }}>
             <form onSubmit={(event) => {
                 event.preventDefault()
-                fecharVenda()
+                concluir()
             }}>
                 <Card
                     sx={{ p: 3 }}
                     variant="outlined"
                 >
                     <Typography variant="h6">
-                        Pedido de venda
+                        Orcamento
                     </Typography>
                     <List sx={{ mt: 2 }}>
-                        {venda.produtos.map((product) => {
+                        {data.produtos.map((product) => {
                             const price = `R$ ${(product.valorUnitario * product.quantidade)}`;
 
                             return (
@@ -184,7 +184,7 @@ export const FinalizarVenda = ({ fecharVenda, venda, back }) => {
                         type="submit"
                         variant="contained"
                     >
-                        Fechar venda
+                        Fechar Orcamento
                     </Button>
                 </Box>
             </form>

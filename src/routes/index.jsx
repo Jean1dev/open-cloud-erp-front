@@ -14,6 +14,10 @@ const CadastroProduto = lazy(() => import('src/pages/produto/cadastro'))
 const VendaListView = lazy(() => import('src/pages/venda'))
 const NovaVenda = lazy(() => import('src/pages/venda/nova-venda'))
 
+const OrcamentoListView = lazy(() => import('src/pages/orcamento'))
+const NovoOrcamento = lazy(() => import('src/pages/orcamento/novo-orcamento'))
+const TransformarEmVenda = lazy(() => import('src/pages/orcamento/transformar-em-venda'))
+
 export const routes = [
     {
         path: '/',
@@ -73,6 +77,23 @@ export const routes = [
                             path: ':id',
                             element: <CadastroProduto />,
                         }]
+                    }
+                ]
+            },
+            {
+                path: 'orcamento',
+                children: [
+                    {
+                        index: true,
+                        element: <OrcamentoListView />
+                    },
+                    {
+                        path: 'novo-orcamento',
+                        element: <NovoOrcamento />
+                    },
+                    {
+                        path: 'transformar-em-venda',
+                        element: <TransformarEmVenda />
                     }
                 ]
             },
