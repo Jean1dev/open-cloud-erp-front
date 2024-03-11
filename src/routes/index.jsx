@@ -18,6 +18,9 @@ const OrcamentoListView = lazy(() => import('src/pages/orcamento'))
 const NovoOrcamento = lazy(() => import('src/pages/orcamento/novo-orcamento'))
 const TransformarEmVenda = lazy(() => import('src/pages/orcamento/transformar-em-venda'))
 
+const ComprasListView = lazy(() => import('src/pages/compras'))
+const NovaCompra = lazy(() => import('src/pages/compras/nova-compra'))
+
 export const routes = [
     {
         path: '/',
@@ -107,6 +110,19 @@ export const routes = [
                     {
                         path: 'nova-venda',
                         element: <NovaVenda />
+                    }
+                ]
+            },
+            {
+                path: 'compra',
+                children: [
+                    {
+                        index: true,
+                        element: <ComprasListView />
+                    },
+                    {
+                        path: 'nova-compra',
+                        element: <NovaCompra />
                     }
                 ]
             },
