@@ -8,7 +8,7 @@ import {
     Users01,
     Pencil01
 } from "@untitled-ui/icons-react"
-import { ShoppingBag } from "@mui/icons-material"
+import { ShoppingBag, LocalShipping } from "@mui/icons-material"
 
 export const useSections = () => {
     return useMemo(() => {
@@ -77,6 +77,25 @@ export const useSections = () => {
                             {
                                 title: 'Novo Orcamento',
                                 path: paths.orcamento.criar
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Compras',
+                        path: paths.compra.list,
+                        icon: (
+                            <SvgIcon fontSize="small">
+                                <LocalShipping />
+                            </SvgIcon>
+                        ),
+                        items: [
+                            {
+                                title: 'Consultar compras',
+                                path: paths.compra.list
+                            },
+                            {
+                                title: 'Nova compra',
+                                path: paths.compra.criar
                             }
                         ]
                     },
