@@ -49,8 +49,8 @@ export const CarrinhoProdutos = ({ next, back, addProdutos }) => {
     }
 
     const adicionarProdutoNoCarrinho = () => {
+        console.log(produtoForm)
         setProdutosNoCarrinho([...produtosNoCarrinho, produtoForm])
-        setProdutoForm(null)
     }
 
     const handleChange = (event) => {
@@ -103,7 +103,7 @@ export const CarrinhoProdutos = ({ next, back, addProdutos }) => {
                                 >
                                     <TextField
                                         fullWidth
-                                        label="Quantidade"
+                                        label={produtoForm?.quantidade ? "" : "Quantidade" }
                                         name="quantidade"
                                         onChange={handleChange}
                                         type="number"
@@ -117,7 +117,7 @@ export const CarrinhoProdutos = ({ next, back, addProdutos }) => {
                                 >
                                     <TextField
                                         fullWidth
-                                        label="Valor"
+                                        label={produtoForm?.valorUnitario ? "" : "Valor" }
                                         name="valorUnitario"
                                         onChange={handleChange}
                                         required
