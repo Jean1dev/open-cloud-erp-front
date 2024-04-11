@@ -63,6 +63,7 @@ export const OrcamentoListTable = (props) => {
     const handleClose = () => {
         setOpen(false);
         setopenEnviarComprovante(false)
+        window.open(`${baseURL}/orcamento/gerar-comprovante?id=${selectedItem}`, '_blank');
     };
 
     const transformEmVenda = orcamento => {
@@ -72,7 +73,6 @@ export const OrcamentoListTable = (props) => {
     const generateReport = useCallback((id) => {
         setopenEnviarComprovante(true)
         setSelectedItem(id)
-        window.open(`${baseURL}/orcamento/gerar-comprovante?id=${id}`, '_blank');
     }, [])
 
     const enviarComprovantePeloWhatsapp = useCallback(() => {
