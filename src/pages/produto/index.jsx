@@ -14,45 +14,79 @@ import {
 } from '@mui/material';
 import { Download, Upload } from '@mui/icons-material';
 import { Plus } from '@untitled-ui/icons-react';
-import { ResultsListTable } from '../../components/results-table';
+import { ResultsListTable } from 'src/components/results-table';
 import { useNavigate } from 'react-router-dom';
 import { RouterLink } from 'src/components/router-link';
+import { ProductListSearch } from 'src/components/produto/product-list-search';
+
+const useSearchOpts = () => {
+  const [state, setState] = useState({
+    filters: {
+      query: ''
+    },
+    page: 0,
+    limit: 5,
+    sortBy: 'createdAt',
+    sortDir: 'desc',
+  })
+
+  const handleFiltersChange = useCallback((filters) => {
+    setState((prevState) => ({
+      ...prevState,
+      filters,
+    }));
+  }, []);
+
+  const handlePageChange = useCallback((_, page) => {
+    setState((prevState) => ({
+      ...prevState,
+      page,
+    }));
+  }, []);
+
+  const handleRowsPerPageChange = useCallback((event) => {
+    setState((prevState) => ({
+      ...prevState,
+      limit: parseInt(event.target.value, 10),
+    }));
+  }, []);
+
+  return {
+    state,
+    handleFiltersChange,
+    handlePageChange,
+    handleRowsPerPageChange,
+    handleSortChange: () => { },
+  }
+}
 
 const ProdutoListView = () => {
+  const searchOpts = useSearchOpts();
   const [items, setItems] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [limit, setLimit] = useState(5);
-  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
+    setLoading(true)
     api.get('produto/paginated', {
       params: {
-        limit: limit,
-        offset: page
+        limit: searchOpts.state.limit,
+        offset: searchOpts.state.page,
+        nome: searchOpts.state.filters.query
       }
     }).then(response => {
-      setItems(response.data)
       setLoading(false)
+      setItems(response.data)
     })
-  }, [limit, page])
-
-  const onRowsPerPageChange = useCallback((val) => {
-    setLoading(true)
-    setLimit(val.target.value)
-  }, [])
-
-  const onPageChange = useCallback((_, it) => {
-    setLoading(true)
-    setPage(it)
-  }, [])
+  }, [
+    searchOpts.state.limit,
+    searchOpts.state.page,
+    searchOpts.state.filters.query
+  ])
 
   const editAction = useCallback((item) => {
     navigate(`cadastrar/${item.id}`, { replace: true, state: item })
   }, [])
-
-  if (loading)
-    return <LinearProgress />
 
   return (
     <>
@@ -123,28 +157,31 @@ const ProdutoListView = () => {
               </Stack>
             </Stack>
             <Card>
-              {/* <CustomerListSearch
-                onFiltersChange={customersSearch.handleFiltersChange}
-                onSortChange={customersSearch.handleSortChange}
-                sortBy={customersSearch.state.sortBy}
-                sortDir={customersSearch.state.sortDir}
+              <ProductListSearch
+                onFiltersChange={searchOpts.handleFiltersChange}
+                onSortChange={searchOpts.handleSortChange}
+                sortBy={searchOpts.state.sortBy}
+                sortDir={searchOpts.state.sortDir}
               />
-              */}
-              <ResultsListTable
-                count={items.totalElements}
-                items={items.content}
-                // onDeselectAll={customersSelection.handleDeselectAll}
-                // onDeselectOne={customersSelection.handleDeselectOne}
-                onPageChange={onPageChange}
-                onRowsPerPageChange={onRowsPerPageChange}
-                // onSelectAll={customersSelection.handleSelectAll}
-                // onSelectOne={customersSelection.handleSelectOne}
-                page={page}
-                rowsPerPage={limit}
-                // selected={customersSelection.selected}
-                cellName={['nome', 'ca', 'valorVenda', 'estoque']}
-                editAction={editAction}
-              />
+
+              { loading && <LinearProgress/> }
+              {
+                !loading && <ResultsListTable
+                  count={items.totalElements}
+                  items={items.content}
+                  // onDeselectAll={customersSelection.handleDeselectAll}
+                  // onDeselectOne={customersSelection.handleDeselectOne}
+                  onPageChange={searchOpts.handlePageChange}
+                  onRowsPerPageChange={searchOpts.handleRowsPerPageChange}
+                  // onSelectAll={customersSelection.handleSelectAll}
+                  // onSelectOne={customersSelection.handleSelectOne}
+                  page={searchOpts.state.page}
+                  rowsPerPage={searchOpts.state.limit}
+                  // selected={customersSelection.selected}
+                  cellName={['nome', 'ca', 'valorVenda', 'estoque']}
+                  editAction={editAction}
+                />
+              }
             </Card>
           </Stack>
         </Container>
