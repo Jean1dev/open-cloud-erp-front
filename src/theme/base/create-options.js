@@ -20,7 +20,7 @@ export const createOptions = (config) => {
     components: createComponents(),
     direction,
     shape: {
-      borderRadius: 8
+      borderRadius: 10
     },
     typography: createTypography()
   };
