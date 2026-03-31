@@ -2,6 +2,8 @@ import { Suspense, lazy } from "react";
 import { Layout } from "../dashboard/layout";
 import { Outlet } from "react-router-dom";
 
+const DashboardView = lazy(() => import('src/pages/dashboard'))
+
 const FornecedoresListView = lazy(() => import('src/pages/fornecedor'))
 const CadastroFornecedor = lazy(() => import('src/pages/fornecedor/cadastro'))
 
@@ -34,7 +36,7 @@ export const routes = [
         children: [
             {
                 index: true,
-                element: <h1>wip</h1>
+                element: <DashboardView />
             },
             {
                 path: 'fornecedor',

@@ -6,20 +6,24 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import { AccountButton } from '../account-button';
 
-const TOP_NAV_HEIGHT = 64;
-const SIDE_NAV_WIDTH = 280;
+const TOP_NAV_HEIGHT = 60;
+const SIDE_NAV_WIDTH = 260;
 
 export const TopNav = (props) => {
   const { onMobileNavOpen, ...other } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const theme = useTheme();
 
   return (
     <Box
       component="header"
       sx={{
-        backdropFilter: 'blur(6px)',
-        backgroundColor: (theme) => alpha(theme.palette.background.default, 0.8),
+        backdropFilter: 'blur(8px)',
+        backgroundColor: alpha(theme.palette.background.paper, 0.85),
+        borderBottom: `1px solid ${theme.palette.divider}`,
         position: 'sticky',
         left: {
           lg: `${SIDE_NAV_WIDTH}px`,
@@ -30,39 +34,39 @@ export const TopNav = (props) => {
         },
         zIndex: (theme) => theme.zIndex.appBar,
       }}
-      {...other}>
+      {...other}
+    >
       <Stack
         alignItems="center"
         direction="row"
         justifyContent="space-between"
-        spacing={2}
         sx={{
           minHeight: TOP_NAV_HEIGHT,
-          px: 2,
+          px: 2.5,
         }}
       >
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={2}
-        >
+        <Stack alignItems="center" direction="row" spacing={1}>
           {!lgUp && (
-            <IconButton onClick={onMobileNavOpen}>
-              <SvgIcon>
+            <IconButton
+              onClick={onMobileNavOpen}
+              size="small"
+              sx={{
+                color: 'text.secondary',
+                '&:hover': {
+                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                  color: 'primary.main',
+                }
+              }}
+            >
+              <SvgIcon fontSize="small">
                 <Menu01Icon />
               </SvgIcon>
             </IconButton>
           )}
         </Stack>
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={2}
-        >
-          {/* <LanguageSwitch />
-          <NotificationsButton />
-          <ContactsButton />
-          <AccountButton /> */}
+
+        <Stack alignItems="center" direction="row" spacing={1}>
+          <AccountButton />
         </Stack>
       </Stack>
     </Box>
